@@ -34,14 +34,12 @@ gem                   'daemon-kit'
 ##################################
 # Alces utility gems
 ##################################
-gem                  'alces-tools', '~> 0.10.3.a', :local => '0.10.3', source: 'http://gems.alces-software.com'
+gem              'alces-tools', :github => 'alces-software/alces-tools', :tag => '0.13.0'
 
 ##################################
 # Alces Stack
 ##################################
-source 'http://gems.alces-software.com' do
-  gem                       'arriba', '~>  0.5.0.a', :local => 'master'
-end
+gem                   'arriba', :github => 'alces-software/arriba', :tag => '0.5.0'
 
 ##################################
 # PAM

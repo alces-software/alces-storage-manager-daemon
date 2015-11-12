@@ -1,13 +1,24 @@
+GIT
+  remote: git://github.com/alces-software/alces-tools.git
+  revision: 39f56e4dc1289b3fe37a3318e267edb08c97d918
+  tag: 0.13.0
+  specs:
+    alces-tools (0.13.0)
+
+GIT
+  remote: git://github.com/alces-software/arriba.git
+  revision: 6181bcd0f11368b1808c6a7305ef5b8e08e001e7
+  tag: 0.5.0
+  specs:
+    arriba (0.5.0)
+      activesupport
+
 GEM
   remote: http://rubygems.org/
-  remote: http://gems.alces-software.com/
   specs:
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
-    alces-tools (0.10.3)
-    arriba (0.5.0)
-      activesupport
     daemon-kit (0.2.1)
       eventmachine (>= 0.12.10)
       i18n
@@ -42,8 +53,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  alces-tools (~> 0.10.3.a)!
-  arriba (~> 0.5.0.a)!
+  alces-tools!
+  arriba!
   daemon-kit
   rake
   rpam-ruby19
