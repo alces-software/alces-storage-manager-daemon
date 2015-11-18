@@ -30,7 +30,17 @@ module Alces
       def authenticate?(options, user, pass)
         ::Rpam.auth(user, pass)
       end
-      
+
+      def targets_for(options, username)
+        {"STUB"  => {    
+            type: :remote,
+            dir_spec: :home,
+            address: "127.0.0.3:25268",
+            ssl: true
+          }
+        }
+      end
+
       PRIVATE_METHODS = [ :as,
                           :to_s,
                           :class,
