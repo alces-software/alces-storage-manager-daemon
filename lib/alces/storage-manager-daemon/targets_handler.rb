@@ -20,20 +20,34 @@ module Alces
       
       private
       
-      def self.load_from_directory(directory)
-        targets = {}
-        if ::Dir.exist?(directory)
-          ::DaemonKit.logger.debug("Looking for targets in " + directory)
-          ::Dir.glob(directory + "*.target.yml") { |targetFile| 
-            ::DaemonKit.logger.debug("Found " + targetFile)
-            target = ::YAML.load_file(targetFile)
-            targets[target.delete("name")] = target
-          }
-          ::DaemonKit.logger.debug("Found targets: " + targets.inspect)
+      class << self
+        def load_from_directory(directory)
+          targets = {}
+          if ::Dir.exist?(directory)
+            ::DaemonKit.logger.debug("Looking for targets in " + directory)
+            ::Dir.glob(directory + "*.target.yml") { |targetFile| 
+              ::DaemonKit.logger.debug("Found " + targetFile)
+              target = symbolize_keys(::YAML.load_file(targetFile))
+              targets[target.delete(:name)] = target
+            }
+            ::DaemonKit.logger.debug("Found targets: " + targets.inspect)
+          end
+          targets
         end
-        targets
+
+        # method based on Ruby on Rails's equivalent
+        def symbolize_keys(hash)
+          transform_keys(hash){ |key| key.to_sym rescue key }
+        end
+        # method based on Ruby on Rails's equivalent
+        def transform_keys(hash)
+          result = hash.class.new
+          hash.each_key do |key|
+            result[yield(key)] = hash[key]
+          end
+          result
+        end
       end
-      
     end
   end
 end
