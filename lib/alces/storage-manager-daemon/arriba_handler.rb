@@ -61,7 +61,10 @@ module Alces
       def directory
         case @dir
         when String
-          if @dir =~ /^lambda{/
+          if @dir[0] == '%'
+            eval(%(::Kernel::lambda{"#{@dir[1..-1]}"}),
+                 passwd_user.instance_eval{::Kernel::binding}).call
+          elsif @dir =~ /^lambda{/
             l = eval("::Kernel::#{@dir}",BasicObject.new.instance_eval{::Kernel::binding})
             l.call(passwd_user)
           else
