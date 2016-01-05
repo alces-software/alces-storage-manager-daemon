@@ -43,3 +43,64 @@ before installing Alces Storage Manager Daemon.
 
 In production environments, it is often desirable to run ASMD as a persistent
 daemon. An init script is provided in `config/etc/init.d` for this purpose.
+
+## Defining storage targets
+ 
+ There are two ways of defining storage 'targets' - that is, storage volumes
+ that appear in the file manager - system-wide and user-specifically.
+ 
+### Defining system-wide targets
+ 
+ ASMD looks in the `/etc/xdg/clusterware/storage/` directory for configuration
+ files that apply to all users. Users will keep their user privileges so you
+ will still need to ensure that they have suitable permissions on the relevant
+ filesystem(s).
+ 
+### Defining user-specific targets
+ 
+ Users may create target configuration files in their 
+ `~/.config/clusterware/storage/` directories (on the system running the ASM
+ daemon).
+ 
+### Target file format
+ 
+ The target specification files are YAML and each describe a single storage
+ volume. They should be called `<name>.target.yml`.
+ 
+ Example:
+ 
+ ```
+ ---
+name: "Home"
+type: posix
+dir: "%#{dir}/"
+address: "127.0.0.2:25268"
+```
+
+#### Options common to all types
+
+* `name` - **Required**. Unique identifying string for this target.
+* `type` - **Required**. Type of connection. Must be one of `posix` or `s3`.
+* `address` - for `posix` targets, the IP address and port of the running ASM
+daemon providing this volume, and defaults to the daemon configured for
+authentication in the Storage Manager application. For `s3` targets, the 
+address of the S3-compatible gateway; defaults to Amazon's AWS S3 service.
+
+#### Options specific to 'posix' targets
+
+* `dir` - **Required**. Directory that is the root of this target. May either be a literal
+path such as `/opt/somefolder/` or use a Ruby-style hash string replacement
+to include variables such as the user's name, home directory or the system temp
+directory; for example `%#{dir}/` for their home directory, or 
+`%/scratch/#{name}/` to represent a user's named directory under `/scratch`.
+* `ssl` - Boolean flag for whether or not to use an SSL connection. Defaults to
+true.
+
+#### Options specific to 's3' targets
+
+* `access_key` - **Required**. The access key from the AWS credentials to be used.
+* `secret_key` - **Required**. The secret key from the AWS credentials to be used.
+* `buckets` - List of additional public buckets to include in the volume. For
+example, `['1000genomes']` will include read-only access to the 1000 Genomes
+project bucket, one of several data sets made available by Amazon. See 
+https://aws.amazon.com/datasets/ for more details.
