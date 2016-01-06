@@ -1,5 +1,5 @@
 #==============================================================================
-# Copyright (C) 2007-2015 Stephen F. Norledge and Alces Software Ltd.
+# Copyright (C) 2007-2016 Stephen F. Norledge and Alces Software Ltd.
 #
 # This file/package is part of Alces Storage Manager Daemon.
 #
@@ -19,11 +19,8 @@
 # For more information on the Alces Storage Manager Daemon, please visit:
 # https://github.com/alces-software/alces-storage-manager-daemon
 #==============================================================================
-$: << File.expand_path("../vendor/alces/lib", __FILE__)
-require 'alces/ext/bundler/dsl_extensions'
-extend Alces::Ext::Bundler::DslExtensions
-
 source "http://rubygems.org"
+#ruby=2.2.1
 ruby ENV['ALCES_RUBY_VERSION'] || '2.2.1'
 
 ##################################
