@@ -39,7 +39,7 @@ gem              'alces-tools', :github => 'alces-software/alces-tools', :tag =>
 ##################################
 # Alces Stack
 ##################################
-gem                   'arriba', :github => 'alces-software/arriba', :tag => '0.6.0'
+gem                   'arriba', :github => 'alces-software/arriba', :branch => '0.6-stable'
 
 ##################################
 # PAM
