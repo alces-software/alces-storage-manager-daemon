@@ -28,6 +28,7 @@ module Alces
             ::Dir.glob(directory + "*.target.yml") { |targetFile| 
               ::DaemonKit.logger.debug("Found " + targetFile)
               target = symbolize_keys(::YAML.load_file(targetFile))
+              target[:file] = targetFile # Useful for reporting errors
               targets[target.delete(:name)] = target
             }
             ::DaemonKit.logger.debug("Found targets: " + targets.inspect)
