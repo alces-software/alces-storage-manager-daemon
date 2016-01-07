@@ -85,6 +85,9 @@ address: "127.0.0.2:25268"
 daemon providing this volume, and defaults to the daemon configured for
 authentication in the Storage Manager application. For `s3` targets, the 
 address of the S3-compatible gateway; defaults to Amazon's AWS S3 service.
+* `sortKey` - when present, this will be used instead of `name` to determine
+the ordering of the target. Targets are returned sorted alphabetically, and
+system targets are always returned before user targets.
 
 #### Options specific to 'posix' targets
 
