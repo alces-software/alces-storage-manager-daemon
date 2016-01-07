@@ -15,7 +15,7 @@ module Alces
       end
 
       def targets_for(username)
-        user_targets(username).merge(TargetsHandler::global_targets)
+        TargetsHandler::global_targets.merge(user_targets(username))
       end
       
       private
@@ -33,7 +33,7 @@ module Alces
             }
             ::DaemonKit.logger.debug("Found targets: " + targets.inspect)
           end
-          targets
+        targets.sort_by {|k, v| v[:sortKey]||k }.to_h
         end
 
         # method based on Ruby on Rails's equivalent
