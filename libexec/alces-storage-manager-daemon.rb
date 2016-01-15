@@ -20,6 +20,30 @@
 # https://github.com/alces-software/alces-storage-manager-daemon
 #==============================================================================
 DaemonKit::Application.running! do |config|
+  module ::Alces
+    module Tools
+      module SSLConfigurator
+        class Configuration
+          attr_reader :verify
+          def initialize(h)
+            @verify = h.delete('verify')
+            h.each do |k,v|
+              self[k] = v
+            end
+          end
+        end
+
+        def ssl_verify_mode
+          if Alces::StorageManagerDaemon.config.ssl.verify == false
+            OpenSSL::SSL::VERIFY_NONE
+          else
+            OpenSSL::SSL::VERIFY_PEER | OpenSSL::SSL::VERIFY_FAIL_IF_NO_PEER_CERT
+          end
+        end
+      end
+    end
+  end
+
   Alces::StorageManagerDaemon.setup! do |daemon|
     daemon.load_config('storage-manager-daemon')
     # Extend the standard Alces::Tools::Logger to provide a convenience
