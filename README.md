@@ -23,6 +23,18 @@ installed before installing Alces Storage Manager Daemon.
 
    ```$ bundle install```
 
+  You may need to install the libpam development libraries for the above to
+  succeed (needed for the `rpam-ruby19` gem). On Debian/Ubuntu this can be
+  done with:
+
+  ```$ apt-get install libpam0g-dev```
+
+  On Red Hat/Fedora:
+
+  ```$ yum install pam-devel```
+
+  Other Operating Systems or distributions may vary.
+
 3. Configure the Storage Manager Daemon by editing the
   `config/storage-manager-daemon.yml`file. A sample configuration file is
   provided at `config/storage-manager-daemon.yml.ex`. The options within this
