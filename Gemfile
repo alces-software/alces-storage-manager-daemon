@@ -24,6 +24,10 @@ require 'alces/ext/bundler/dsl_extensions'
 extend Alces::Ext::Bundler::DslExtensions
 
 source "http://rubygems.org"
+
+# For rvm.
+#ruby=2.2.1
+
 ruby ENV['ALCES_RUBY_VERSION'] || '2.2.1'
 
 ##################################
