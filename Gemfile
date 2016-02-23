@@ -20,7 +20,10 @@
 # https://github.com/alces-software/alces-storage-manager-daemon
 #==============================================================================
 source "http://rubygems.org"
+
+# For rvm.
 #ruby=2.2.1
+
 ruby ENV['ALCES_RUBY_VERSION'] || '2.2.1'
 
 ##################################

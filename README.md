@@ -12,8 +12,8 @@ The ASM Daemon provides PAM-based authentication and filesystem access to the
 ASM web application.
 
 ## Configuration
-Alces Storage Manager is a Ruby application. You must have Ruby installed
-before installing Alces Storage Manager Daemon.
+Alces Storage Manager Daemon is a Ruby application. You must have Ruby
+installed before installing Alces Storage Manager Daemon.
 
 1. Clone the git repository:
 
@@ -23,7 +23,19 @@ before installing Alces Storage Manager Daemon.
 
    ```$ bundle install```
 
-3. Configure the Storage Manager Daemon by editing the 
+  You may need to install the libpam development libraries for the above to
+  succeed (needed for the `rpam-ruby19` gem). On Debian/Ubuntu this can be
+  done with:
+
+  ```$ apt-get install libpam0g-dev```
+
+  On Red Hat/Fedora:
+
+  ```$ yum install pam-devel```
+
+  Other Operating Systems or distributions may vary.
+
+3. Configure the Storage Manager Daemon by editing the
   `config/storage-manager-daemon.yml`file. A sample configuration file is
   provided at `config/storage-manager-daemon.yml.ex`. The options within this
   file are as follows:
@@ -45,30 +57,30 @@ In production environments, it is often desirable to run ASMD as a persistent
 daemon. An init script is provided in `config/etc/init.d` for this purpose.
 
 ## Defining storage targets
- 
+
  There are two ways of defining storage 'targets' - that is, storage volumes
  that appear in the file manager - system-wide and user-specifically.
- 
+
 ### Defining system-wide targets
- 
+
  ASMD looks in the `/etc/xdg/clusterware/storage/` directory for configuration
  files that apply to all users. Users will keep their user privileges so you
  will still need to ensure that they have suitable permissions on the relevant
  filesystem(s).
- 
+
 ### Defining user-specific targets
- 
- Users may create target configuration files in their 
+
+ Users may create target configuration files in their
  `~/.config/clusterware/storage/` directories (on the system running the ASM
  daemon).
- 
+
 ### Target file format
- 
+
  The target specification files are YAML and each describe a single storage
  volume. They should be called `<name>.target.yml`.
- 
+
  Example:
- 
+
  ```
  ---
 name: "Home"
@@ -83,7 +95,7 @@ address: "127.0.0.2:25268"
 * `type` - **Required**. Type of connection. Must be one of `posix` or `s3`.
 * `address` - for `posix` targets, the IP address and port of the running ASM
 daemon providing this volume, and defaults to the daemon configured for
-authentication in the Storage Manager application. For `s3` targets, the 
+authentication in the Storage Manager application. For `s3` targets, the
 address of the S3-compatible gateway; defaults to Amazon's AWS S3 service.
 * `sortKey` - when present, this will be used instead of `name` to determine
 the ordering of the target. Targets are returned sorted alphabetically, and
@@ -94,7 +106,7 @@ system targets are always returned before user targets.
 * `dir` - **Required**. Directory that is the root of this target. May either be a literal
 path such as `/opt/somefolder/` or use a Ruby-style hash string replacement
 to include variables such as the user's name, home directory or the system temp
-directory; for example `%#{dir}/` for their home directory, or 
+directory; for example `%#{dir}/` for their home directory, or
 `%/scratch/#{name}/` to represent a user's named directory under `/scratch`.
 * `ssl` - Boolean flag for whether or not to use an SSL connection. Defaults to
 true.
@@ -105,5 +117,5 @@ true.
 * `secret_key` - **Required**. The secret key from the AWS credentials to be used.
 * `buckets` - List of additional public buckets to include in the volume. For
 example, `['1000genomes']` will include read-only access to the 1000 Genomes
-project bucket, one of several data sets made available by Amazon. See 
+project bucket, one of several data sets made available by Amazon. See
 https://aws.amazon.com/datasets/ for more details.
