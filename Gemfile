@@ -46,7 +46,7 @@ gem                   'arriba', alces_github: 'arriba', :branch => '0.6-stable'
 ##################################
 # PAM
 ##################################
-gem 				'rpam-ruby19'
+gem               'rpam-ruby19', alces_github: 'rpam-ruby19'
 
 ##################################
 # Testing
