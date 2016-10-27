@@ -10,22 +10,22 @@ module Alces
       end
 
       def user_targets(username)
-        userdir = ::Dir.home + "/.config/clusterware/storage/"
+        userdir = ::Dir.home(username) + "/.config/clusterware/storage/"
         TargetsHandler::load_from_directory(userdir)
       end
 
       def targets_for(username)
         TargetsHandler::global_targets.merge(user_targets(username))
       end
-      
+
       private
-      
+
       class << self
         def load_from_directory(directory)
           targets = {}
           if ::Dir.exist?(directory)
             ::DaemonKit.logger.debug("Looking for targets in " + directory)
-            ::Dir.glob(directory + "*.target.yml") { |targetFile| 
+            ::Dir.glob(directory + "*.target.yml") { |targetFile|
               ::DaemonKit.logger.debug("Found " + targetFile)
               target = symbolize_keys(::YAML.load_file(targetFile))
               target[:file] = targetFile # Useful for reporting errors
